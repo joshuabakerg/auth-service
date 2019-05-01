@@ -1,0 +1,70 @@
+package za.co.joshuabakerg.auth.authservice.domain.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
+@Document(collection = "User")
+@Data
+public class User implements UserDetails {
+
+    @Id
+    @JsonIgnore
+    private ObjectId id;
+
+    private String username;
+
+    private String password;
+
+    private Name name;
+
+    private Contact contact;
+
+    private Picture picture;
+
+    private Collection<Role> roles;
+
+    private boolean accountExpired;
+
+    private boolean accountLocked;
+
+    private boolean credentialsExpired;
+
+    private boolean enabled;
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return false;
+    }
+}
