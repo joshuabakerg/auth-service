@@ -1,7 +1,7 @@
 package za.co.joshuabakerg.auth.authservice.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
+import lombok.Data;
 
 @Document(collection = "User")
 @Data
@@ -47,24 +49,24 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isAccountNonExpired() {
-        return false;
+        return !accountExpired;
     }
 
     @Override
     @JsonIgnore
     public boolean isAccountNonLocked() {
-        return false;
+        return !accountLocked;
     }
 
     @Override
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
-        return false;
+        return !credentialsExpired;
     }
 
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 }
